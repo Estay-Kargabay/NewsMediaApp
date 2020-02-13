@@ -1,6 +1,9 @@
 package com.estay.newsmediaapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log.d
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -14,6 +17,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        val sharedPrefs=getSharedPreferences("production",Context.MODE_PRIVATE)
+        val isSingnedIn=sharedPrefs.getBoolean("is_signed_in",false)
+        d("main","is user is signedin $isSingnedIn")
+        if (!isSingnedIn){
+            d("main","goiingto login screen")
+            startActivity(Intent(this,LoginActivity::class.java))
+        }else{
+            d("main","user is signedin dont woryy  ")
+        }
+
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
